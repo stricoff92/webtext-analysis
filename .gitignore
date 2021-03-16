@@ -1,1 +1,6 @@
 env/
+__pycache__/
+applocals.py
+*.sqlite3
+*.log
+
