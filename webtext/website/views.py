@@ -54,4 +54,4 @@ def app_logout(request):
 @require_safe
 @login_required
 def app_index(request):
-    return HttpResponse("Hello!")
+    return render(request, 'index.html', {})
