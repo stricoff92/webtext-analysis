@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                font-family:arial;
+                text-align:center;
+            }
+            .login-form-row {
+                margin-top:0.5rem;
+            }
+            .login-form-container {
+                display:inline-block;
+                margin-top:1.5rem;
+                padding:1rem;
+                border-radius: 10px;
+                background-color:#dbdbdb;
+                min-width:300px;
+            }
+            .login-form-error {
+                font-weight:bold;
+                color:#ff0000;
+                margin-bottom:2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="login-heading-container">
+            <div>
+                <h1>Webtext Analysis</h1>
+            </div>
+            <div>
+                <img src="https://media.giphy.com/media/IwTWTsUzmIicM/giphy.gif" width="300px">
+            </div>
+        </div>
+        <div class="login-form-container">
+            <h3>Log In</h3>
+            {% if login_error %}
+                <div class="login-form-error">
+                    {{ login_error }}
+                </div>
+            {% endif %}
+            <form action="/login/" method="POST" onsubmit="return validateLoginForm()">
+                {% csrf_token %}
+                <div class="login-form-row">
+                    <input
+                        type="text"
+                        placeholder="username"
+                        name="username"
+                        id="login-username"
+                        {% if attempted_username %}
+                            value="{{ attempted_username }}"
+                        {% endif %}
+                    >
+                </div>
+                <div class="login-form-row">
+                    <input
+                        type="password"
+                        placeholder="password"
+                        name="password"
+                        id="login-password"
+                    >
+                </div>
+                <div class="login-form-row">
+                    <input type="submit" value="login">
+                </div>
+            </form>
+        </div>
+        <script>
+            function validateLoginForm() {
+                const username = document.getElementById("login-username").value;
+                const password = document.getElementById("login-password").value;
+                const errors = [];
+                if (!username || username.length < 3) {
+                    errors.push("Invalid Username.");
+                }
+                if (!password || password.length < 5) {
+                    errors.push("Invalid Password.");
+                }
+                if(errors.length) {
+                    alert(errors.join(" "));
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        </script>
+    </body>
+</html>
