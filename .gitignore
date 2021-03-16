@@ -3,4 +3,5 @@ __pycache__/
 applocals.py
 *.sqlite3
 *.log
+angular_static/
 
