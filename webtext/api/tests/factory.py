@@ -28,4 +28,4 @@ class MockHTTPResponse:
 
     def raise_for_status(self):
         if self.exception_to_raise:
-            raise exception_to_raise
+            raise self.exception_to_raise

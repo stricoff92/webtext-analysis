@@ -12,6 +12,11 @@ from api.lib.content_types import (
     CONTENT_TYPE_TEXT,
     CONTENT_TYPE_HTML,
 )
+from api.lib.web_scraper import (
+    HTTPTimeoutError,
+    InvalidHTTPStatusCodeError,
+    InvalidHTTPContentTypeError,
+)
 from .base_test_case import BaseTestBase
 from .factory import MockHTTPResponse
 
@@ -159,6 +164,80 @@ class WebAnalysisAPITests(BaseTestBase):
         response = self.client.post(api_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertTrue("Invalid analysis_mode" in str(response.data)) # TODO: fix json formatting
+
+
+    def test_api_returns_error_when_downstream_server_returns_a_404(self):
+        """ Test the API can handle an error response from the downstream server.
+        """
+        self.client.force_login(self.user)
+
+        # Prepare mock response
+        mock_response_headers = {
+            'content-type':CONTENT_TYPE_TEXT,
+        }
+        mock_response_content = b'Not Found'
+        mock_response = MockHTTPResponse(
+            status.HTTP_404_NOT_FOUND,
+            mock_response_content,
+            headers=mock_response_headers,
+            exception_to_raise=requests.HTTPError("got status code 404"))
+        self.mock_requests_get.return_value = mock_response
+
+        target_url = f'https://foobar.com/robots.txt'
+        data = {
+            'target_url':target_url,
+            'analysis_mode':WebAnalysis.ANALYSIS_MODE_STATIC,
+        }
+        api_url = reverse("api-create-web-analysis")
+        response = self.client.post(api_url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_502_BAD_GATEWAY)
+        self.assertEqual(response.data, {'error': 'Received HTTP status 404.'})
+
+
+    def test_api_returns_error_when_downstream_server_times_out(self):
+        """ Test the API can handle a timeout from the downstream server.
+        """
+        self.client.force_login(self.user)
+
+        # Mock out a connection timeout
+        self.mock_requests_get.side_effect = requests.ConnectTimeout("connection timed out")
+
+        target_url = f'https://foobar.com/robots.txt'
+        data = {
+            'target_url':target_url,
+            'analysis_mode':WebAnalysis.ANALYSIS_MODE_STATIC,
+        }
+        api_url = reverse("api-create-web-analysis")
+        response = self.client.post(api_url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_502_BAD_GATEWAY)
+        self.assertEqual(response.data, {'error': 'Connection timed out after 5 seconds.'})
+
+
+    def test_api_returns_error_when_downstream_server_returns_an_unusable_content_type(self):
+        """ Test the API can handle a timeout from the downstream server.
+        """
+        self.client.force_login(self.user)
+
+        # Prepare mock response
+        mock_response_headers = {
+            'content-type':'application/json',
+        }
+        mock_response_content = b'{"hello":"world"}'
+        mock_response = MockHTTPResponse(
+            status.HTTP_200_OK,
+            mock_response_content,
+            headers=mock_response_headers)
+        self.mock_requests_get.return_value = mock_response
+
+        target_url = f'https://foobar.com/robots.txt'
+        data = {
+            'target_url':target_url,
+            'analysis_mode':WebAnalysis.ANALYSIS_MODE_STATIC,
+        }
+        api_url = reverse("api-create-web-analysis")
+        response = self.client.post(api_url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_502_BAD_GATEWAY)
+        self.assertEqual(response.data, {'error': 'Received invalid content type: application/json'})
 
 
     def test_user_can_get_web_analysis_details_for_their_own_web_analysis(self):
