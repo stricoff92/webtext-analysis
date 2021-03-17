@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = applocals.SECRET_KEY
 
 
-all_envs = ['DEV', 'STAGING', 'PROD']
+all_envs = ['DEV', 'STAGING', 'PROD',]
 if applocals.ENV not in all_envs:
     raise Exception(f"Invalid ENV from applocals.py \"{applocals.ENV}\"")
 
@@ -92,17 +92,25 @@ WSGI_APPLICATION = 'webtext.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': applocals.MYSQL_DB_NAME,
-        'HOST': applocals.MYSQL_HOST,
-        'USER': applocals.MYSQL_USER,
-        'PASSWORD': applocals.MYSQL_PASS,
-        'PORT': applocals.MYSQL_PORT,
-        'OPTIONS': {'charset': 'utf8mb4'},
+if DEBUG and hasattr(applocals, "USE_SQLITE") and applocals.USE_SQLITE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'testdb.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': applocals.MYSQL_DB_NAME,
+            'HOST': applocals.MYSQL_HOST,
+            'USER': applocals.MYSQL_USER,
+            'PASSWORD': applocals.MYSQL_PASS,
+            'PORT': applocals.MYSQL_PORT,
+            'OPTIONS': {'charset': 'utf8mb4'},
+        }
+    }
 
 
 
@@ -155,3 +163,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "website/templates/static"),
     os.path.join(BASE_DIR, "website/templates/angular_static"),
 ]
+
+
+
+SLUG_LENGTH = 8
+PAGINATION_PAGE_SIZE = 20

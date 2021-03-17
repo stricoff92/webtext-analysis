@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- TODO: Move this into static file -->
         <style>
             body {
                 font-family:arial;
@@ -42,7 +43,11 @@
                     {{ login_error }}
                 </div>
             {% endif %}
-            <form action="/login/" method="POST" onsubmit="return validateLoginForm()">
+            <form
+                action="{% url 'anon-login' %}"
+                method="POST"
+                onsubmit="return validateLoginForm()"
+            >
                 {% csrf_token %}
                 <div class="login-form-row">
                     <input
