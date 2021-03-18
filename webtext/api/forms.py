@@ -8,7 +8,7 @@ from api.utils import is_valid_url
 
 class NewWebAnalysisForm(forms.Form):
     target_url = forms.CharField(max_length=300, required=True)
-    analysis_mode = forms.CharField(max_length=8, required=True)
+    analysis_mode = forms.CharField(max_length=12, required=True)
 
     def clean(self, *args, **kwargs) -> Dict:
         cleaned_data = super().clean(*args, **kwargs)

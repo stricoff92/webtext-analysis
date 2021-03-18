@@ -191,7 +191,7 @@ class WebAnalysisAPITests(BaseTestBase):
         api_url = reverse("api-create-web-analysis")
         response = self.client.post(api_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_502_BAD_GATEWAY)
-        self.assertEqual(response.data, {'error': 'Received HTTP status 404.'})
+        self.assertEqual(response.data, {'error': 'Received downstream HTTP status 404.'})
 
 
     def test_api_returns_error_when_downstream_server_times_out(self):
@@ -210,7 +210,7 @@ class WebAnalysisAPITests(BaseTestBase):
         api_url = reverse("api-create-web-analysis")
         response = self.client.post(api_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_502_BAD_GATEWAY)
-        self.assertEqual(response.data, {'error': 'Connection timed out after 5 seconds.'})
+        self.assertEqual(response.data, {'error': 'Downstream connection timed out after 5 seconds.'})
 
 
     def test_api_returns_error_when_downstream_server_returns_an_unusable_content_type(self):
