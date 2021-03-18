@@ -1,0 +1,12 @@
+
+<div class="card mt-2 p-1">
+    <div class="card-header p-1">
+        <strong>Query History</strong>
+    </div>
+    <div class="card-body p-1">
+        <ng-container *ngFor="let wa of webAnalysisList()">
+            <app-queryhistoryrow [webAnalysisData]="wa">
+            </app-queryhistoryrow>
+        </ng-container>
+    </div>
+</div>

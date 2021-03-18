@@ -1,0 +1,65 @@
+
+<div class="card mt-2">
+    <div #rowCardHeader class="card-header clickable-item p-1" (click)="expandRow()">
+        <strong>{{ webAnalysisData.target_url }}</strong>
+    </div>
+    <!-- Meta Information -->
+    <div *ngIf="rowExpanded" class="card-body p-2">
+        <div class="alert alert-info p-2">
+            <span><em>Meta Information</em></span>
+            <table>
+                <tr>
+                    <td>
+                        <strong>Created At</strong>
+                    </td>
+                    <td>
+                        {{ webAnalysisData.created_at }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Scrape Method</strong>
+                    </td>
+                    <td>
+                        {{ webAnalysisData.analysis_mode }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Content Type</strong>
+                    </td>
+                    <td>
+                        {{ webAnalysisData.page_content_type }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Character Count</strong>
+                    </td>
+                    <td>
+                        {{ page_content_length_with_commas() }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Word Counts -->
+        <div class="alert alert-info p-2">
+            <span><em>Word Counts</em></span>
+            <div>
+                <span class="badge badge-secondary ml-1" *ngFor="let wcd of sortedWordCounts">
+                    <strong>{{ wcd.count }}</strong>: {{ wcd.value }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Page Text -->
+        <div class="alert alert-info p-2">
+            <span><em>Page Text</em></span>
+            <div>
+                {{ webAnalysisData.page_content }}
+            </div>
+        </div>
+
+    </div>
+</div>

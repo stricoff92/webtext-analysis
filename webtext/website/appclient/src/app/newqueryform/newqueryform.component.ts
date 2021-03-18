@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UrlsService } from '../urls.service';
 import { NewAnalysisRequestData } from 'src/app/newAnalysisRequestData.model';
 import { ApiService } from '../api.service';
+import { WebanalysislistService } from 'src/app/webanalysislist.service'
 import { WebAnalysisFullDetails } from 'src/app/webAnalysisDetails.model'
 
 @Component({
@@ -23,7 +24,9 @@ export class NewqueryformComponent implements OnInit {
 
   constructor(
     private _url:UrlsService,
-    private _api:ApiService
+    private _api:ApiService,
+    private _webAnalysisService:WebanalysislistService
+
   ) { }
 
   ngOnInit() {
@@ -47,11 +50,11 @@ export class NewqueryformComponent implements OnInit {
     if(!this.runQueryButtonEnabled) {
       return
     }
+    this.errorMessage = ""
+    this.disableRunQueryBtn()
 
     const url = this.targetUrlInput
     const scrapeMode = this.scrapeModeInput
-
-    this.disableRunQueryBtn()
 
     if(!this._url.urlIsValid(url)) {
       this.enableRunQueryBtn()
@@ -84,7 +87,7 @@ export class NewqueryformComponent implements OnInit {
     // Query successful
     this.showLoadingSpinner = false
     this.enableRunQueryBtn()
-    console.log(webAnalysis)
+    this._webAnalysisService.registerNewWebAnalysis(webAnalysis)
 
   }
 

@@ -200,7 +200,7 @@ class WebAnalysisAPITests(BaseTestBase):
         self.client.force_login(self.user)
 
         # Mock out a connection timeout
-        self.mock_requests_get.side_effect = requests.ConnectTimeout("connection timed out")
+        self.mock_requests_get.side_effect = requests.Timeout("connection timed out")
 
         target_url = f'https://foobar.com/robots.txt'
         data = {
