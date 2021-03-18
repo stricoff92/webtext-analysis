@@ -22,7 +22,7 @@ import { QueryhistoryrowComponent } from './queryhistoryrow/queryhistoryrow.comp
     FormsModule,
     HttpClientModule,
     HttpClientXsrfModule.withOptions({
-      cookieName: 'csrftoken', // TODO: Verify if this needs to be updated
+      cookieName: 'csrftoken',
       headerName: 'X-CSRFToken',
     }),
   ],
