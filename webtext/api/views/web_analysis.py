@@ -109,3 +109,12 @@ def get_web_analysis_list(request):
     data['rows'] = WebAnalysisBasicDetailsSerializer(qs, many=True).data
     data['another_page'] = qs.count() == page_size
     return Response(data, status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_saved_web_analyses(request):
+    """ Delete all web analysis records for this user.
+    """
+    WebAnalysis.objects.filter(owner=request.user).delete()
+    return Response('', status.HTTP_204_NO_CONTENT, content_type="")

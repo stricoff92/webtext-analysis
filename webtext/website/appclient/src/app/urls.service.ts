@@ -13,11 +13,13 @@ export class UrlsService {
   getUserInfoUrl:string
   getWebAnaylsisListUrl:string
   createWebAnalysisUrl:string
+  deleteWebAnaylsisListUrl:string
 
   constructor() {
     this.getUserInfoUrl = this.join(this.baseAPIUrl, 'user', 'details')
     this.createWebAnalysisUrl = this.join(this.baseAPIUrl, 'web-analysis', 'create')
     this.getWebAnaylsisListUrl = this.join(this.baseAPIUrl, 'web-analysis', 'list')
+    this.deleteWebAnaylsisListUrl = this.join(this.baseAPIUrl, 'web-analysis', 'list', 'delete')
   }
 
   getWebAnalysisDetailsUrl(slug:string):string {
@@ -54,6 +56,19 @@ export class UrlsService {
     } else {
       throw new Error(`url ${url} contains unexpected number of char \"?\"`)
     }
+  }
+
+  parseQueryParams(qs:string):any {
+    // TODO: Setup Angular Router
+    // Thanks https://stackoverflow.com/questions/979975/how-to-get-the-value-from-the-get-parameters
+    qs = qs.split('+').join(' ');
+    let params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+    return params;
   }
 
 }

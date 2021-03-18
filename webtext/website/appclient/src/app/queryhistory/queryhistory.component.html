@@ -2,8 +2,29 @@
 <div class="card mt-2 p-1">
     <div class="card-header p-1">
         <strong>Query History</strong>
+        <button class="btn btn-danger p-1 ml-2" (click)="clearHistoryBtnClick()">
+            <strong>Clear History</strong>
+        </button>
     </div>
     <div class="card-body p-1">
+        <div class="alert alert-secondary">
+            <strong>Sort By:</strong>
+            <button
+                class="btn btn-secondary ml-1 p-1"
+                (click)="sortByCreatedAt()"
+            >
+                Created At
+            </button>
+            <button
+                class="btn btn-secondary ml-1 p-1"
+                (click)="sortByCharCount()"
+            >
+                Char Count
+            </button>
+            <span>
+                Desc. <input #sortDescCheckboxElem type="checkbox">
+            </span>
+        </div>
         <ng-container *ngFor="let wa of webAnalysisList()">
             <app-queryhistoryrow [webAnalysisData]="wa">
             </app-queryhistoryrow>
