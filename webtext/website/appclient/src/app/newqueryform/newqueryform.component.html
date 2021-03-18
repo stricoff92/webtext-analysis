@@ -1,0 +1,59 @@
+
+<div class="card mt-2 p-1">
+    <div class="card-header p-1">
+        <strong>New Web Text Query</strong>
+    </div>
+    <div class="card-body p-1">
+        <!-- Error Alerts-->
+        <div
+            *ngIf="errorMessage"
+            class="d-inline-block alert alert-danger pt-1 pb-1 mt-2"
+        >
+            <div id="error-alert-container">
+                <div>
+                    {{ errorMessage }}
+                </div>
+                <div class="ml-4">
+                    <span class="dummy-link" (click)="closeErrorAlert()">close</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Fields (URL & ANALYSIS MODE) -->
+        <div class="form-row">
+            <div class="col-md-5 col-11 mt-2">
+                <label for="target-url">URL to Scrape</label>
+                <input
+                    #targetUrlInputElem
+                    [(ngModel)]="targetUrlInput"
+                    type="text"
+                    class="form-control"
+                    placeholder="https://"
+                    id="target-url"
+                    maxlength="250"
+                >
+            </div>
+            <div class="col-md-5 col-11 mt-2 ml-2">
+                <label for="select-scrape-mode">Scrape Mode</label>
+                <select [(ngModel)]="scrapeModeInput" class="form-control" id="select-scrape-mode">
+                    <option value='static' selected>
+                        Static (faster)
+                    </option>
+                    <option value='javascript'>
+                        JavaScript (slower)
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Run Query Button and Loading icon -->
+        <div class="form-row mt-4">
+            <button #runQueryBtnElem class="btn btn-primary ml-2" (click)="runQueryBtnClick()">
+                <strong>Run</strong>
+            </button>
+            <div *ngIf="showLoadingSpinner" class="loading-spinner d-inline-block ml-2">
+            </div>
+        </div>
+
+    </div>
+</div>

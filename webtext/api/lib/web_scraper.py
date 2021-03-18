@@ -41,13 +41,13 @@ def scrape_static_page(target_url:str, timeout_seconds=5) -> tuple:
         response = requests.get(target_url, timeout=timeout_seconds)
     except requests.ConnectTimeout:
         raise HTTPTimeoutError(
-            f"Connection timed out after {timeout_seconds} seconds.")
+            f"Downstream connection timed out after {timeout_seconds} seconds.")
 
     try:
         response.raise_for_status()
     except requests.HTTPError:
         raise InvalidHTTPStatusCodeError(
-            f"Received HTTP status {response.status_code}.")
+            f"Received downstream HTTP status {response.status_code}.")
 
     InvalidHTTPContentTypeError.validate_content_type(response)
 
