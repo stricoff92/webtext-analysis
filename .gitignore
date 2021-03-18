@@ -1,3 +1,5 @@
+
+# Django/Python ignores
 env/
 __pycache__/
 applocals.py
@@ -5,3 +7,5 @@ applocals.py
 *.log
 angular_static/
 
+
+# Angular ignores are in webtext/website/appclient/.gitignore
