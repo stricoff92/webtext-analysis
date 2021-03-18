@@ -8,6 +8,7 @@ export class ApiService {
 
   STATUS_200_OK = 200
   STATUS_201_CREATED = 201
+  STATUS_204_NO_CONTENT = 204
   STATUS_502_BAD_GATEWAY = 502
 
   constructor(
@@ -20,6 +21,10 @@ export class ApiService {
 
   post(url:string, data:any):Promise<any> {
     return this._http.post(url, data).toPromise();
+  }
+
+  delete(url:string):Promise<any> {
+    return this._http.delete(url).toPromise();
   }
 
 }

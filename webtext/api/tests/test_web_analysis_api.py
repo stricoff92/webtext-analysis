@@ -384,3 +384,39 @@ class WebAnalysisAPITests(BaseTestBase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data['rows']), 0)
         self.assertFalse(response.data['another_page'])
+
+    def test_user_can_delete_own_web_analyses(self):
+        """ Test a user can delete their history of saved web anayses.
+        """
+        self.client.force_login(self.user)
+
+        page_content_length = 42
+        web_analysis = self.factory.create_web_analysis(
+            self.user,
+            'Sitemap: https://www.foobar.com/sitemaps/ User-agent: *',
+            page_content_length,
+            'https://foobar.com/robots.txt')
+        self.assertEqual(WebAnalysis.objects.count(), 1)
+
+        api_url = reverse("api-delete-web-analysis-list")
+        response = self.client.delete(api_url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(WebAnalysis.objects.count(), 0) # Record was deleted
+
+
+    def test_user_cant_delete_others_web_analyses(self):
+        """ Test a user cant delete another user's history of saved web anayses.
+        """
+        self.client.force_login(self.user)
+
+        page_content_length = 42
+        web_analysis = self.factory.create_web_analysis(
+            self.other_user,
+            'Sitemap: https://www.foobar.com/sitemaps/ User-agent: *',
+            page_content_length,
+            'https://foobar.com/robots.txt')
+
+        api_url = reverse("api-delete-web-analysis-list")
+        response = self.client.delete(api_url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(WebAnalysis.objects.count(), 1) # Record was not deleted
