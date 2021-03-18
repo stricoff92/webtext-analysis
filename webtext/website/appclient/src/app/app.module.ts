@@ -6,12 +6,16 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeadingbarComponent } from './headingbar/headingbar.component';
 import { NewqueryformComponent } from './newqueryform/newqueryform.component';
+import { QueryhistoryComponent } from './queryhistory/queryhistory.component';
+import { QueryhistoryrowComponent } from './queryhistoryrow/queryhistoryrow.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeadingbarComponent,
-    NewqueryformComponent
+    NewqueryformComponent,
+    QueryhistoryComponent,
+    QueryhistoryrowComponent
   ],
   imports: [
     BrowserModule,

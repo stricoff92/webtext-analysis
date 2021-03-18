@@ -39,9 +39,12 @@ def scrape_page(target_url:str, mode:str) -> tuple:
 def scrape_static_page(target_url:str, timeout_seconds=5) -> tuple:
     try:
         response = requests.get(target_url, timeout=timeout_seconds)
-    except requests.ConnectTimeout:
+    except requests.Timeout:
         raise HTTPTimeoutError(
             f"Downstream connection timed out after {timeout_seconds} seconds.")
+    except requests.RequestException as e:
+        raise WebScrapeError(
+            f"Could not connect to the downstream server.")
 
     try:
         response.raise_for_status()

@@ -1,0 +1,10 @@
+
+td {
+    padding:5px;
+}
+
+.clickable-item:hover {
+    cursor:pointer;
+    background-color: #56006b;
+    color:#ffffff
+}
