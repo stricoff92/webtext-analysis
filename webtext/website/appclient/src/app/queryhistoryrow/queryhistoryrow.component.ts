@@ -42,7 +42,7 @@ export class QueryhistoryrowComponent implements OnInit {
   created_at_formatted():string {
     // Convert TZ aware UTC timestamp to localized human readable datetime.
     const created_at:moment.Moment = moment(this.webAnalysisData.created_at);
-    return created_at.format("lll")
+    return created_at.format("lll") // example formatted string: "Mar 18, 2021 9:07 PM"
   }
 
   // TODO: move this function to another file?
