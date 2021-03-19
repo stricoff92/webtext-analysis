@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import * as moment from 'moment';
+
 import {
   WebAnalysisListDetails,
   WebAnalysisFullDetails
@@ -35,6 +37,12 @@ export class QueryhistoryrowComponent implements OnInit {
 
   page_content_length_with_commas():string {
     return this.numberWithCommas(this.webAnalysisData.page_content_length)
+  }
+
+  created_at_formatted():string {
+    // Convert TZ aware UTC timestamp to localized human readable datetime.
+    const created_at:moment.Moment = moment(this.webAnalysisData.created_at);
+    return created_at.format("lll")
   }
 
   // TODO: move this function to another file?
