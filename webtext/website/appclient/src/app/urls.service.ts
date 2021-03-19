@@ -71,4 +71,8 @@ export class UrlsService {
     return params;
   }
 
+  getParsedPageQueryParams():any {
+    return this.parseQueryParams(window.location.search)
+  }
+
 }

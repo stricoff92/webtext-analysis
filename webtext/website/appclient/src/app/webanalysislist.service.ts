@@ -23,7 +23,7 @@ export class WebanalysislistService {
     private _api:ApiService,
     private _url:UrlsService,
   ) {
-    this.searchParams = this._url.parseQueryParams(window.location.search)
+    this.searchParams = this._url.getParsedPageQueryParams()
     const startPage = 1
     this.fetchWebAnalysisList(startPage)
   }

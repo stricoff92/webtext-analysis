@@ -26,4 +26,17 @@ describe('QueryhistoryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should check the DESC sort checkbox by default', ()=>{
+    expect(component.sortDescCheckboxElem.nativeElement.checked).toBeTruthy()
+  })
+
+  it('should not check the DESC sort checkbox if url params contain an ASC sort param', ()=>{
+    // TODO: Write this
+  })
+
+  it('should check the DESC sort checkbox if url params contain an DESC sort param', ()=>{
+    // TODO: Write this
+  })
+
 });
