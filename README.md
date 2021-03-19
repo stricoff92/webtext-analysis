@@ -2,6 +2,7 @@
 
 ## About
 This application scrapes text from the web. You can choose to scrape with a simple crawler or a headless browser.
+Currently the app supports 2 contents type: `text/plain` and `text/html`.
 
 ![](https://i.imgur.com/rt4tnEDh.jpg)
 
