@@ -19,9 +19,11 @@ class WebAnalysis(models.Model):
     page_content_type = models.CharField(max_length=30)
 
     ANALYSIS_MODE_STATIC = 'static'
-    ANALYSIS_MODES = (ANALYSIS_MODE_STATIC, )
+    ANALYSIS_MODE_HEADLESS = 'headless'
+    ANALYSIS_MODES = (ANALYSIS_MODE_STATIC, ANALYSIS_MODE_HEADLESS,)
     ANALYSIS_MODES_CHOICES = (
         (ANALYSIS_MODE_STATIC, "Static",),
+        (ANALYSIS_MODE_HEADLESS, "Headless",),
     )
     analysis_mode = models.CharField(max_length=8, choices=ANALYSIS_MODES_CHOICES)
 

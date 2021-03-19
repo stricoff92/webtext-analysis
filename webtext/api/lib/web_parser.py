@@ -31,7 +31,7 @@ def parse_reponse_content_plain_text(response_content:str) -> str:
 
 
 def parse_reponse_content_html(response_content:str) -> str:
-    text_elements = BeautifulSoup(response_content).findAll(text=True)
+    text_elements = BeautifulSoup(response_content, 'html.parser').findAll(text=True)
     visible_elements = (elem.strip() for elem in text_elements if _elem_is_visible(elem))
     visible_text = " ".join(visible_elements)
     visible_text = visible_text.replace("\n", " ")
