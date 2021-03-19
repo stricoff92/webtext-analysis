@@ -1,12 +1,23 @@
 import { TestBed, async } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
+import { HeadingbarComponent } from 'src/app/headingbar/headingbar.component';
+import { NewqueryformComponent } from 'src/app/newqueryform/newqueryform.component';
+import { QueryhistoryComponent } from 'src/app/queryhistory/queryhistory.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        HeadingbarComponent,
+        NewqueryformComponent,
+        QueryhistoryComponent
       ],
+      imports:[
+        FormsModule
+      ]
     }).compileComponents();
   }));
 
