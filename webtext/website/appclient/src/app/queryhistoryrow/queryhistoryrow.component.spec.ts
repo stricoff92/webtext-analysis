@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { QueryhistoryrowComponent } from './queryhistoryrow.component';
 
@@ -8,7 +9,8 @@ describe('QueryhistoryrowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QueryhistoryrowComponent ]
+      declarations: [ QueryhistoryrowComponent ],
+      imports: [HttpClientTestingModule],
     })
     .compileComponents();
   }));
