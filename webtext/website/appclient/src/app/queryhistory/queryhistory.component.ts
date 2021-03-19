@@ -36,7 +36,7 @@ export class QueryhistoryComponent implements OnInit {
   }
 
   pageSearchParamSortIsDesc():boolean {
-    const pageQueryParams = this._url.parseQueryParams(window.location.search)
+    const pageQueryParams = this._url.getParsedPageQueryParams()
     const validSortValues = this._webAnalysisService.validSortValues
     const defaultValue = true
     for (let qsKey of Object.keys(pageQueryParams)) {
