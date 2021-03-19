@@ -79,7 +79,7 @@ $ npm install
 # Build assets once
 $ ng build --output-hashing all --base-href /static/
 
-# Build a watch for changes
+# Build and watch for changes
 $ ng build --watch --output-hashing all --base-href /static/
 # or
 $ npm run-script builddev
