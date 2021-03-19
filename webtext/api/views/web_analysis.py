@@ -100,6 +100,9 @@ def get_web_analysis_list(request):
     sortable_columns = ['created_at', 'page_content_length',]
     sortable_columns = list(chain(*list([f"{v}", f"-{v}"] for v in sortable_columns)))
     sort_by = request.query_params.get("sort", '-created_at')
+    if sort_by not in sortable_columns:
+        return Response("invalid sort", status.HTTP_400_BAD_REQUEST)
+
 
     # Apply sorting and pagination.
     qs = WebAnalysis.objects.filter(owner=request.user).order_by(sort_by)
